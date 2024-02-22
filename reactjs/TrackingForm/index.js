@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import js-cookies from 'js-cookies
+import Cookies from 'js-cookies
 
 class TackingForm extends Component {
  state = {
@@ -16,7 +16,7 @@ class TackingForm extends Component {
     Cookies.set('jwt_token', jwtToken, {
       expires: 30,
     })
-    history.replace('/')
+    history.replace('/tracking/:trackingNumber')
   }
 
   onSubmitFailure = errorMsg => {
