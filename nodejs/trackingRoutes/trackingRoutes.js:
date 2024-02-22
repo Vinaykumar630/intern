@@ -1,0 +1,34 @@
+const express = require('express');
+const router = express.Router();
+const TrackingModel = require('../models/TrackingModel');
+
+router.post('/track', async (req, res) => {
+  try {
+    // Implement tracking logic
+    const trackingData = req.body;
+    const trackingId = await TrackingModel.createTracking(trackingData);
+
+    res.status(201).json({ id: trackingId });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/track/:trackingNumber', async (req, res) => {
+  try {
+    const { trackingNumber } = req.params;
+    const trackingData = await TrackingModel.getTrackingByNumber(trackingNumber);
+
+    if (!trackingData) {
+      res.status(404).send('Tracking information not found');
+    } else {
+      res.status(200).json(trackingData);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+module.exports = router;
